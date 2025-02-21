@@ -7,7 +7,7 @@ pageextension 60102 PurchaseOrderListExt extends "Purchase Order List"
         {
             action(ShowMatchingOrders)
             {
-                Caption = 'Show Orders with Vendor Invoice No. = INV';
+                Caption = 'Show Orders with Vendor Invoice No.';
                 ApplicationArea = All;
                 Image = List;
 
@@ -15,18 +15,18 @@ pageextension 60102 PurchaseOrderListExt extends "Purchase Order List"
                 var
                     PurchaseHeader: Record "Purchase Header";
                     OrderList: Text;
+                    VendorInvNo: Code[20];
                 begin
-                    PurchaseHeader.SetRange("Vendor Invoice No.", 'INV');
+                    VendorInvNo := 'INV';
+
+                    PurchaseHeader.SetRange("Vendor Invoice No.", VendorInvNo);
                     PurchaseHeader.SetRange("Document Type", PurchaseHeader."Document Type"::Order);
 
-                    if PurchaseHeader.FindSet() then begin
-                        repeat
-                            OrderList += Format(PurchaseHeader."No.");
-                        until PurchaseHeader.Next() = 0;
-
-                        Message('Purchase Orders with Vendor Invoice No. "INV":', OrderList);
+                    if PurchaseHeader.FindFirst() then begin
+                        OrderList := PurchaseHeader.GetFilter("No.");
+                        Message('Purchase Orders with Vendor Invoice No. "%1": %2', VendorInvNo, OrderList);
                     end else
-                        Message('No Purchase Orders found with Vendor Invoice No. "INV".');
+                        Message('No Purchase Orders found with Vendor Invoice No. "%1".', VendorInvNo);
                 end;
             }
         }
