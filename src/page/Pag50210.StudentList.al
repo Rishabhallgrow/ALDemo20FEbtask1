@@ -1,9 +1,12 @@
 page 60100 StudentList
 {
     PageType = List;
+    ApplicationArea = all;
+    UsageCategory = Lists;
     SourceTable = StudentMaster;
-    Caption = 'gautam';
+    Caption = 'Rishabh';
     CardPageId = StudentCard;
+
     layout
     {
         area(content)

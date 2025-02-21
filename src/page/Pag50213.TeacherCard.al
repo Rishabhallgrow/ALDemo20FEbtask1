@@ -3,6 +3,7 @@ page 60104 TeacherCard
     PageType = Card;
     SourceTable = TeacherMaster;
     Caption = 'Teacher card';
+    ApplicationArea = all;
     layout
     {
         area(content)

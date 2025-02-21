@@ -2,6 +2,8 @@ page 60102 StudentCard
 {
     PageType = Card;
     SourceTable = StudentMaster;
+    CardPageId = StudentList;
+    ApplicationArea = all;
     layout
     {
         area(content)

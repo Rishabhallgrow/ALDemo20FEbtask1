@@ -1,6 +1,8 @@
 page 60103 TeacherList
 {
     PageType = List;
+    ApplicationArea = all;
+    UsageCategory = Lists;
     SourceTable = TeacherMaster;
     Caption = 'teacher list';
     CardPageId = TeacherCard;
