@@ -14,18 +14,24 @@ pageextension 60102 PurchaseOrderListExt extends "Purchase Order List"
                 trigger OnAction()
                 var
                     PurchaseHeader: Record "Purchase Header";
-                    OrderList: Text;
+                    OrderCount: Integer;
                     VendorInvNo: Code[20];
                 begin
-                    VendorInvNo := 'INV';
+                    VendorInvNo := '23047';
 
                     PurchaseHeader.SetRange("Vendor Invoice No.", VendorInvNo);
                     PurchaseHeader.SetRange("Document Type", PurchaseHeader."Document Type"::Order);
 
-                    if PurchaseHeader.FindFirst() then begin
-                        OrderList := PurchaseHeader.GetFilter("No.");
-                        Message('Purchase Orders with Vendor Invoice No. "%1": %2', VendorInvNo, OrderList);
-                    end else
+                    OrderCount := 0;
+
+                    if PurchaseHeader.FindSet() then
+                        repeat
+                            OrderCount += 1;
+                        until PurchaseHeader.Next() = 0;
+
+                    if OrderCount > 0 then
+                        Message('Purchase Orders with Vendor Invoice No. "%1": %2', VendorInvNo, OrderCount)
+                    else
                         Message('No Purchase Orders found with Vendor Invoice No. "%1".', VendorInvNo);
                 end;
             }
